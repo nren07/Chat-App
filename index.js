@@ -6,13 +6,8 @@ require('dotenv').config()
 const port=process.env.PORT || 3000; //to retrive envirenment variables use this
 const socketIo=require('socket.io');
 const SocketIoServer=socketIo.Server;
-
-// <--to send string to the browser-->
-// app.get("/" ,(req,res)=>{
-//     res.send("hello");
-// })
-
-//insteed sending this string we can send to frontend 
+const dataArray={};
+const clients = new Map();
 
 app.use(express.static('FrontEnd'));
 
@@ -23,10 +18,25 @@ const io=new SocketIoServer(httpServer);
 
 //when connection establishment this event triggered
 io.on('connection',(socket)=>{
-    socket.on('sending msg event',(data)=>{ //this is a event listener
-        io.emit('io is spreding',data)  //this is a event
+    
+    socket.on('login',(name,id)=>{
+        clients.set(id,socket);
+        let data={};
+        data.name=name;
+        data.id=id;
+        dataArray[id]=data;
+        io.emit('userDataPrint',dataArray);
+        
+    })
+    socket.on('sending msg event',(data,socketId)=>{
+        sendDataToSocket(socketId,data);
     })
 })
+
+function sendDataToSocket(socketId, data) {
+    const socket = clients.get(socketId);
+    socket.emit('message', data);
+}
 
 httpServer.listen(port,()=>{
     console.log("server start"+port);

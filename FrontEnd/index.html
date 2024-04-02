@@ -6,20 +6,24 @@
     <title>Chat App</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <div id="form_container">
+<body class="alignCenter">
+    <div id="login_container" class="alignCenter">
         <input id="user" type="text" placeholder="userName" name="user">
-        <button id="login">Login</button>
+        <button id="loginBtn">Login</button>
     </div>
-    <div id="message_container" class="hide"  >
-        <h1>Chat App</h1>
-        <div id="message_div">
-            
+    <div class="chat_container">
+        <div id="chat_container" class="hide"  >
+            <div id="header">
+                <!-- <h1>Chat App</h1> -->
+            </div>
+            <div id="message_div">
+            </div>
+            <div id="footer_conatiner">
+                <input type="text" placeholder="...Type Here" id="input">
+                <button id="sendBtn">Send</button>
+            </div>
         </div>
-        <div>
-            <input type="text" placeholder="...Type Here" name="message" id="message">
-            <button id="sendBtn">Send</button>
-        </div>
+        <div id="activeUsers" style="display: none;"></div>
     </div>
     <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script>
     <script src="script.js"></script>
